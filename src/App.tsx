@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import "./index.css";
+import TradesList from "./trades";
 
 export default function ComingSoon() {
   const [countdown, setCountdown] = useState({
@@ -77,7 +78,7 @@ export default function ComingSoon() {
           className="pt-8"
         ></motion.div>
       </motion.div>
-
+      <TradesList/>
       <Footer />
     </div>
   );
