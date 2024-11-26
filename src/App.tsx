@@ -14,25 +14,24 @@ export default function ComingSoon() {
 
   useEffect(() => {
     const targetDate = new Date("2024-11-31T21:00:00"); // Adjust date and time as needed (UTC)
-  
+
     const updateCountdown = () => {
       const now = new Date();
       const difference = Math.max(targetDate.getTime() - now.getTime(), 0); // Ensure difference is not negative
-  
+
       const totalHours = Math.floor(difference / (1000 * 60 * 60)); // Total hours remaining
       const hours = totalHours % 24; // Hours after accounting for full days
       const minutes = Math.floor((difference / (1000 * 60)) % 60);
       const seconds = Math.floor((difference / 1000) % 60);
-  
+
       setCountdown({ hours, minutes, seconds });
     };
-  
+
     updateCountdown(); // Initial call to set the countdown immediately
     const interval = setInterval(updateCountdown, 1000);
-  
+
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
-  
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 overflow-hidden">
@@ -53,9 +52,7 @@ export default function ComingSoon() {
             className="animate-float"
           />
           <h1 className="text-5xl md:text-7xl font-bold">
-            <span className="text-indigo-100">
-              live24.fun
-            </span>
+            <span className="text-indigo-100">live24.fun</span>
           </h1>
         </div>
 
@@ -101,7 +98,7 @@ function CountdownTimer({
   countdown: { hours: number; minutes: number; seconds: number };
 }) {
   return (
-    <div className="flex gap-4 justify-center text-center">
+    <div className="flex flex-wrap gap-4 justify-center text-center">
       {Object.entries(countdown).map(([unit, value]) => (
         <motion.div
           key={unit}
@@ -111,10 +108,14 @@ function CountdownTimer({
             duration: 0.5,
             delay: 0.2 * Object.keys(countdown).indexOf(unit),
           }}
-          className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg p-4"
+          className="flex flex-col items-center justify-center text-sm sm:text-base md:text-lg p-2 sm:p-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow w-20 sm:w-24"
         >
-          <div className="text-4xl font-bold">{value}</div>
-          <div className="text-sm uppercase text-purple-300">{unit}</div>
+          <div className="text-2xl sm:text-3xl md:text-4xl font-bold">
+            {value}
+          </div>
+          <div className="text-xs sm:text-sm md:text-base uppercase text-purple-300">
+            {unit}
+          </div>
         </motion.div>
       ))}
     </div>
@@ -125,9 +126,7 @@ function AnimatedText({ text }: { text: string }) {
   return (
     <p className="flex items-center justify-center space-x-2">
       <Sparkles className="text-yellow-400" />
-      <span className="text-indigo-600">
-        {text}
-      </span>
+      <span className="text-indigo-600">{text}</span>
     </p>
   );
 }
