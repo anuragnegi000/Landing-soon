@@ -46,7 +46,7 @@ export default function ComingSoon() {
       >
         <div className="flex flex-col items-center gap-6">
           <img
-            src="../public/live24.png"
+            src="https://i.ibb.co/dGQ933K/live24.png"
             alt="Live24 Logo"
             width={200}
             height={80}
