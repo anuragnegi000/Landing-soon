@@ -13,7 +13,9 @@ export default function ComingSoon() {
   });
 
   useEffect(() => {
-    const targetDate = new Date("2024-11-31T21:00:00"); // Adjust date and time as needed (UTC)
+    const currentDate = new Date(); // Get the current date and time
+    const targetDate = new Date(currentDate); // Create a new Date object based on the current date
+    targetDate.setDate(currentDate.getDate() + 6); // Add 4 days to the current date
 
     const updateCountdown = () => {
       const now = new Date();
