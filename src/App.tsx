@@ -13,26 +13,38 @@ export default function ComingSoon() {
   });
 
   useEffect(() => {
-    const currentDate = new Date(); // Get the current date and time
-    const targetDate = new Date(currentDate); // Create a new Date object based on the current date
-    targetDate.setDate(currentDate.getDate() + 6); // Add 4 days to the current date
+    // Retrieve or set the target date
+    const savedTargetDate = localStorage.getItem("targetDate");
+    let targetDate;
+
+    if (savedTargetDate) {
+      targetDate = new Date(savedTargetDate);
+    } else {
+      targetDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      localStorage.setItem("targetDate", targetDate.toISOString());
+    }
 
     const updateCountdown = () => {
       const now = new Date();
-      const difference = Math.max(targetDate.getTime() - now.getTime(), 0); // Ensure difference is not negative
+      const difference = Math.max(targetDate.getTime() - now.getTime(), 0);
 
-      const totalHours = Math.floor(difference / (1000 * 60 * 60)); // Total hours remaining
-      const hours = totalHours % 24; // Hours after accounting for full days
+      const totalHours = Math.floor(difference / (1000 * 60 * 60));
+      const hours = totalHours % 24;
       const minutes = Math.floor((difference / (1000 * 60)) % 60);
       const seconds = Math.floor((difference / 1000) % 60);
 
       setCountdown({ hours, minutes, seconds });
+
+      // Clear the target date if the countdown reaches 0
+      if (difference === 0) {
+        localStorage.removeItem("targetDate");
+      }
     };
 
-    updateCountdown(); // Initial call to set the countdown immediately
+    updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   return (
